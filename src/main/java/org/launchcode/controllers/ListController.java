@@ -49,7 +49,6 @@ public class ListController {
             model.addAttribute("items", items);
             return "list-column";
         }
-
     }
 
     @RequestMapping(value = "jobs")
@@ -59,6 +58,12 @@ public class ListController {
         ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(column, value);
         model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         model.addAttribute("jobs", jobs);
+
+        if(jobs.isEmpty()) {
+            model.addAttribute("noEntry", "No entries found.");
+        } else {
+            model.addAttribute("numberOfResults", jobs.size() + " entries found.");
+        }
 
         return "list-jobs";
     }
